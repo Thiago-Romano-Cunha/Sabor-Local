@@ -33,12 +33,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => HomePageWidget(),
+      errorBuilder: (context, state) => appStateNotifier.showSplashImage
+          ? Builder(
+              builder: (context) => Container(
+                color: Colors.transparent,
+                child: Image.asset(
+                  'assets/images/splash-screen-artwork--not-a-login-or-form-screen-.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          : HomePageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomePageWidget(),
+          builder: (context, _) => appStateNotifier.showSplashImage
+              ? Builder(
+                  builder: (context) => Container(
+                    color: Colors.transparent,
+                    child: Image.asset(
+                      'assets/images/splash-screen-artwork--not-a-login-or-form-screen-.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              : HomePageWidget(),
         ),
         FFRoute(
           name: HomePageWidget.routeName,
@@ -49,6 +69,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: Teste2Widget.routeName,
           path: Teste2Widget.routePath,
           builder: (context, params) => Teste2Widget(),
+        ),
+        FFRoute(
+          name: RedefinirSenhaWidget.routeName,
+          path: RedefinirSenhaWidget.routePath,
+          builder: (context, params) => RedefinirSenhaWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
