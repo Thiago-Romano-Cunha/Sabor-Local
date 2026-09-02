@@ -646,11 +646,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         hasTransition: true,
                                                         transitionType:
                                                             PageTransitionType
-                                                                .scale,
-                                                        alignment: Alignment
-                                                            .bottomCenter,
+                                                                .rightToLeft,
                                                         duration: Duration(
-                                                            milliseconds: 5000),
+                                                            milliseconds: 1000),
                                                       ),
                                                     },
                                                   );
