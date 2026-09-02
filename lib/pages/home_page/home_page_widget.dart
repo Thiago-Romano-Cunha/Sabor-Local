@@ -639,19 +639,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               FFButtonWidget(
                                                 onPressed: () async {
                                                   context.pushNamed(
-                                                    Teste2Widget.routeName,
-                                                    extra: <String, dynamic>{
-                                                      '__transition_info__':
-                                                          TransitionInfo(
-                                                        hasTransition: true,
-                                                        transitionType:
-                                                            PageTransitionType
-                                                                .rightToLeft,
-                                                        duration: Duration(
-                                                            milliseconds: 1000),
-                                                      ),
-                                                    },
-                                                  );
+                                                      Teste2Widget.routeName);
                                                 },
                                                 text: 'Entrar',
                                                 options: FFButtonOptions(
