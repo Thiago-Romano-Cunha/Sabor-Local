@@ -639,7 +639,19 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               FFButtonWidget(
                                                 onPressed: () async {
                                                   context.pushNamed(
-                                                      Teste2Widget.routeName);
+                                                    Teste2Widget.routeName,
+                                                    extra: <String, dynamic>{
+                                                      '__transition_info__':
+                                                          TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                            PageTransitionType
+                                                                .leftToRight,
+                                                        duration: Duration(
+                                                            milliseconds: 120),
+                                                      ),
+                                                    },
+                                                  );
                                                 },
                                                 text: 'Entrar',
                                                 options: FFButtonOptions(
@@ -785,8 +797,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
               alignment: AlignmentDirectional(0.0, -1.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  '',
+                child: Image.asset(
+                  'assets/images/Gemini_Generated_Image_mkax3gmkax3gmkax.png',
                   width: double.infinity,
                   height: 300.0,
                   fit: BoxFit.cover,
