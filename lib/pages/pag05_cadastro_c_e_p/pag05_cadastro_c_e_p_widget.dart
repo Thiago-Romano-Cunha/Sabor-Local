@@ -86,34 +86,6 @@ class _Pag05CadastroCEPWidgetState extends State<Pag05CadastroCEPWidget> {
                                 },
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Voltar',
-                                style: FlutterFlowTheme.of(context)
-                                    .headlineMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .fontStyle,
-                                      ),
-                                      color: FlutterFlowTheme.of(context).creme,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -139,6 +111,34 @@ class _Pag05CadastroCEPWidgetState extends State<Pag05CadastroCEPWidget> {
                                   fontStyle: FontStyle.italic,
                                 ),
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          'Voltar',
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                font: GoogleFonts.interTight(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .fontStyle,
+                                ),
+                                color: FlutterFlowTheme.of(context).creme,
+                                fontSize: 16.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontStyle,
+                              ),
                         ),
                       ),
                       Align(
@@ -183,10 +183,13 @@ class _Pag05CadastroCEPWidgetState extends State<Pag05CadastroCEPWidget> {
           height: double.infinity,
           child: Stack(
             children: [
-              wrapWithModel(
-                model: _model.cadastroExemploModel,
-                updateCallback: () => safeSetState(() {}),
-                child: CadastroExemploWidget(),
+              Align(
+                alignment: AlignmentDirectional(0.0, 0.0),
+                child: wrapWithModel(
+                  model: _model.cadastroExemploModel,
+                  updateCallback: () => safeSetState(() {}),
+                  child: CadastroExemploWidget(),
+                ),
               ),
             ],
           ),

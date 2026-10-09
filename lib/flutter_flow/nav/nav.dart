@@ -33,32 +33,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => appStateNotifier.showSplashImage
-          ? Builder(
-              builder: (context) => Container(
-                color: Colors.transparent,
-                child: Image.asset(
-                  'assets/images/splash-screen-artwork--not-a-login-or-form-screen-.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
-          : Pag02HomepageWidget(),
+      errorBuilder: (context, state) => Pag01SplashArtWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.showSplashImage
-              ? Builder(
-                  builder: (context) => Container(
-                    color: Colors.transparent,
-                    child: Image.asset(
-                      'assets/images/splash-screen-artwork--not-a-login-or-form-screen-.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                )
-              : Pag02HomepageWidget(),
+          builder: (context, _) => Pag01SplashArtWidget(),
         ),
         FFRoute(
           name: Pag02HomepageWidget.routeName,
@@ -83,12 +63,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: Pag03CadastroCPFWidget.routeName,
           path: Pag03CadastroCPFWidget.routePath,
-          builder: (context, params) => Pag03CadastroCPFWidget(),
+          builder: (context, params) => Pag03CadastroCPFWidget(
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: Pag04VerificarWidget.routeName,
           path: Pag04VerificarWidget.routePath,
-          builder: (context, params) => Pag04VerificarWidget(),
+          builder: (context, params) => Pag04VerificarWidget(
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: Pag01SplashArtWidget.routeName,

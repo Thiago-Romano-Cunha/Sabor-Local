@@ -39,6 +39,8 @@ class CadastroExemploModel extends FlutterFlowModel<CadastroExemploWidget> {
   TextEditingController? textFieldCompTextController4;
   String? Function(BuildContext, String?)?
       textFieldCompTextController4Validator;
+  // Stores action output result for [Backend Call - API (Enderenco)] action in Button widget.
+  ApiCallResponse? apiResult0ot;
 
   @override
   void initState(BuildContext context) {}

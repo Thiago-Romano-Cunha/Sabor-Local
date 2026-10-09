@@ -88,8 +88,8 @@ class _PopupfalhaWidgetState extends State<PopupfalhaWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        context.safePop();
                       },
                       text: 'Retornar ao Login',
                       options: FFButtonOptions(

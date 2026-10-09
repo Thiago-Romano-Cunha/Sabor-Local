@@ -47,19 +47,93 @@ class CepCall {
 
 class CadastroCall {
   static Future<ApiCallResponse> call({
-    String? nome = '',
+    String? name = '',
+    String? email = '',
+    String? password = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+"name": ${name == null ? 'null' : '"${escapeStringForJson(name)}"'},
+"email": ${email == null ? 'null' : '"${escapeStringForJson(email)}"'},
+"password": ${password == null ? 'null' : '"${escapeStringForJson(password)}"'}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'cadastro',
+      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:AudoSZ5I/auth/signup',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? authToken(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.authToken''',
+      ));
+  static int? user(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.user_id''',
+      ));
+}
+
+class LoginCall {
+  static Future<ApiCallResponse> call({
+    String? email = '',
+    String? password = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+"email": ${email == null ? 'null' : '"${escapeStringForJson(email)}"'},
+"password": ${password == null ? 'null' : '"${escapeStringForJson(password)}"'}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Login',
+      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:AudoSZ5I/auth/login',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? authToken(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.authToken''',
+      ));
+  static int? user(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.user_id''',
+      ));
+}
+
+class ClienteCall {
+  static Future<ApiCallResponse> call({
     String? celular = '',
     String? cpf = '',
   }) async {
     final ffApiRequestBody = '''
 {
-  "Nome": ${nome == null ? 'null' : '"${escapeStringForJson(nome)}"'},
-  "celular": ${celular == null ? 'null' : '"${escapeStringForJson(celular)}"'},
-  "cpf": ${cpf == null ? 'null' : '"${escapeStringForJson(cpf)}"'}
+"celular": ${celular == null ? 'null' : '"${escapeStringForJson(celular)}"'},
+"cpf": ${cpf == null ? 'null' : '"${escapeStringForJson(cpf)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
-      callName: 'Cadastro',
-      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:pLpV81mU/cadastro',
+      callName: 'cliente',
+      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:VM1MdIex/cliente',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -75,32 +149,85 @@ class CadastroCall {
   }
 }
 
-class ValidacaoEmailCall {
+class SendgridCall {
   static Future<ApiCallResponse> call({
-    String? imputemail = 'thigas.romano@gmail.com',
-    String? imputNome = 'testarossa',
+    String? email = '',
+  }) async {
+    final ffApiRequestBody = '''
+{"email": ${email == null ? 'null' : '"${escapeStringForJson(email)}"'}}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Sendgrid',
+      apiUrl:
+          'https://x8ki-letl-twmt.n7.xano.io/api:AudoSZ5I/message/send_welcome_email',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ValidaOTPCall {
+  static Future<ApiCallResponse> call({
+    String? codigoOpt = '',
+    String? email = '',
   }) async {
     final ffApiRequestBody = '''
 {
-  "created_at": "now",
-  "name": ${imputNome == null ? 'null' : '"${escapeStringForJson(imputNome)}"'},
-  "email": ${imputemail == null ? 'null' : '"${escapeStringForJson(imputemail)}"'},
-  "password": null,
-  "role": "",
-  "password_reset": {
-    "token": "",
-    "expiration": null,
-    "used": false
-  },
-  "papel_id": 6,
-  "codigo_opt": "",
-  "data_expiracao": null
+  "codigo": ${codigoOpt == null ? 'null' : '"${escapeStringForJson(codigoOpt)}"'},
+  "email": ${email == null ? 'null' : '"${escapeStringForJson(email)}"'}
 }''';
     return ApiManager.instance.makeApiCall(
-      callName: 'ValidacaoEmail',
-      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:XuaVoVEX/user_teste',
+      callName: 'Valida OTP',
+      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:AudoSZ5I/auth/verify_otp',
       callType: ApiCallType.POST,
       headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class EnderencoCall {
+  static Future<ApiCallResponse> call({
+    String? logradouro = '',
+    String? numero = '',
+    String? complemento = '',
+    String? referencia = '',
+    String? authToken = '',
+    String? cep = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "logradouro": ${logradouro == null ? 'null' : '"${escapeStringForJson(logradouro)}"'},
+  "numero": ${numero == null ? 'null' : '"${escapeStringForJson(numero)}"'},
+  "complemento": ${complemento == null ? 'null' : '"${escapeStringForJson(complemento)}"'},
+  "referencia": ${referencia == null ? 'null' : '"${escapeStringForJson(referencia)}"'},
+  "authToken": ${authToken == null ? 'null' : '"${escapeStringForJson(authToken)}"'},
+  "cep": ${cep == null ? 'null' : '"${escapeStringForJson(cep)}"'}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Enderenco',
+      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:VM1MdIex/endereco',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${authToken}',
+        'Content-type': 'application/json',
+      },
       params: {},
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,

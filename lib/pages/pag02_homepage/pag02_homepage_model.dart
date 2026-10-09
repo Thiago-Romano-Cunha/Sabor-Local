@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'pag02_homepage_widget.dart' show Pag02HomepageWidget;
@@ -22,6 +23,8 @@ class Pag02HomepageModel extends FlutterFlowModel<Pag02HomepageWidget> {
   TextEditingController? textController2;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? textController2Validator;
+  // Stores action output result for [Backend Call - API (Login)] action in Button widget.
+  ApiCallResponse? apiResultx4o;
 
   @override
   void initState(BuildContext context) {

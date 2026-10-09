@@ -5,8 +5,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -14,7 +16,12 @@ import 'pag03_cadastro_c_p_f_model.dart';
 export 'pag03_cadastro_c_p_f_model.dart';
 
 class Pag03CadastroCPFWidget extends StatefulWidget {
-  const Pag03CadastroCPFWidget({super.key});
+  const Pag03CadastroCPFWidget({
+    super.key,
+    this.email,
+  });
+
+  final String? email;
 
   static String routeName = 'Pag03CadastroCPF';
   static String routePath = '/pag03CadastroCPF';
@@ -445,11 +452,15 @@ class _Pag03CadastroCPFWidgetState extends State<Pag03CadastroCPFWidget> {
                             child: TextFormField(
                               controller: _model.textFieldEmailTextController3,
                               focusNode: _model.textFieldEmailFocusNode3,
-                              onFieldSubmitted: (_) async {
-                                if (functions.validaCPF(_model
-                                    .textFieldEmailTextController3.text)) {
-                                  return;
-                                } else {
+                              onChanged: (_) => EasyDebounce.debounce(
+                                '_model.textFieldEmailTextController3',
+                                Duration(milliseconds: 2000),
+                                () async {
+                                  if (functions.validaCPF(_model
+                                      .textFieldEmailTextController3.text)) {
+                                    return;
+                                  }
+
                                   await showDialog(
                                     context: context,
                                     builder: (dialogContext) {
@@ -473,8 +484,10 @@ class _Pag03CadastroCPFWidgetState extends State<Pag03CadastroCPFWidget> {
                                       );
                                     },
                                   );
-                                }
-                              },
+
+                                  return;
+                                },
+                              ),
                               autofocus: false,
                               enabled: true,
                               obscureText: false,
@@ -850,43 +863,88 @@ class _Pag03CadastroCPFWidgetState extends State<Pag03CadastroCPFWidget> {
                         FFButtonWidget(
                           onPressed: () async {
                             var _shouldSetState = false;
-                            _model.apiResultejq = await CadastroCall.call(
-                              nome: _model.textFieldEmailTextController1.text,
+                            _model.apiResult60n = await CadastroCall.call(
+                              name: _model.textFieldEmailTextController1.text,
+                              email: _model.textFieldEmailTextController2.text,
+                              password:
+                                  _model.textFieldSenhaTextController.text,
                             );
 
                             _shouldSetState = true;
-                            if ((_model.apiResultejq?.succeeded ?? true)) {
+                            if ((_model.apiResult60n?.succeeded ?? true)) {
+                              FFAppState().authToken = CadastroCall.authToken(
+                                (_model.apiResult60n?.jsonBody ?? ''),
+                              )!;
+                              FFAppState().UserId = CadastroCall.user(
+                                (_model.apiResult60n?.jsonBody ?? ''),
+                              )!;
+                              safeSetState(() {});
+                              unawaited(
+                                () async {
+                                  _model.apiResultkh6 = await ClienteCall.call(
+                                    celular: _model
+                                        .textFieldCelularTextController.text,
+                                    cpf: _model
+                                        .textFieldEmailTextController3.text,
+                                  );
+                                }(),
+                              );
+                              _shouldSetState = true;
+                              unawaited(
+                                () async {
+                                  _model.apiResultmhe = await SendgridCall.call(
+                                    email: _model
+                                        .textFieldEmailTextController2.text,
+                                  );
+                                }(),
+                              );
+                              _shouldSetState = true;
+
+                              context.pushNamed(
+                                Pag04VerificarWidget.routeName,
+                                queryParameters: {
+                                  'email': serializeParam(
+                                    _model.textFieldEmailTextController2.text,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                              );
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Cadastro Realizado!',
+                                    'Email de verificacao enviado',
                                     style: TextStyle(
                                       color: FlutterFlowTheme.of(context)
-                                          .textoMarrom,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 28.0,
+                                          .primaryText,
                                     ),
                                   ),
                                   duration: Duration(milliseconds: 4000),
                                   backgroundColor:
-                                      FlutterFlowTheme.of(context).creme,
+                                      FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
-
-                              context.pushNamed(Pag04VerificarWidget.routeName);
-
-                              _model.apiResultefa =
-                                  await ValidacaoEmailCall.call(
-                                imputemail:
-                                    _model.textFieldEmailTextController2.text,
-                                imputNome:
-                                    _model.textFieldEmailTextController1.text,
+                              if (_shouldSetState) safeSetState(() {});
+                              return;
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Dados nao cadastrado',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
                               );
-
-                              _shouldSetState = true;
                               if (_shouldSetState) safeSetState(() {});
                               return;
                             }
+
                             if (_shouldSetState) safeSetState(() {});
                           },
                           text: 'Continuar',

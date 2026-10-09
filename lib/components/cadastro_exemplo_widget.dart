@@ -3,10 +3,12 @@ import '/components/popupcerto_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'cadastro_exemplo_model.dart';
 export 'cadastro_exemplo_model.dart';
 
@@ -60,6 +62,8 @@ class _CadastroExemploWidgetState extends State<CadastroExemploWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 50.0),
       child: Container(
@@ -820,19 +824,55 @@ class _CadastroExemploWidgetState extends State<CadastroExemploWidget> {
               Builder(
                 builder: (context) => FFButtonWidget(
                   onPressed: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (dialogContext) {
-                        return Dialog(
-                          elevation: 0,
-                          insetPadding: EdgeInsets.zero,
-                          backgroundColor: Colors.transparent,
-                          alignment: AlignmentDirectional(0.0, 0.0)
-                              .resolve(Directionality.of(context)),
-                          child: PopupcertoWidget(),
-                        );
-                      },
+                    var _shouldSetState = false;
+                    _model.apiResult0ot = await EnderencoCall.call(
+                      logradouro: _model.textFieldRUATextController.text,
+                      numero: _model.textFieldCompTextController1.text,
+                      complemento: _model.textFieldCompTextController3.text,
+                      referencia: _model.textFieldCompTextController4.text,
+                      authToken: FFAppState().authToken,
+                      cep: _model.textFieldCEPTextController.text,
                     );
+
+                    _shouldSetState = true;
+                    if ((_model.apiResult0ot?.succeeded ?? true)) {
+                      await showDialog(
+                        context: context,
+                        builder: (dialogContext) {
+                          return Dialog(
+                            elevation: 0,
+                            insetPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            alignment: AlignmentDirectional(0.0, 0.0)
+                                .resolve(Directionality.of(context)),
+                            child: PopupcertoWidget(),
+                          );
+                        },
+                      );
+
+                      context.pushNamed(Pag02HomepageWidget.routeName);
+
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Erro',
+                            style: TextStyle(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
+                          ),
+                          duration: Duration(milliseconds: 4000),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).secondary,
+                        ),
+                      );
+                      if (_shouldSetState) safeSetState(() {});
+                      return;
+                    }
+
+                    if (_shouldSetState) safeSetState(() {});
                   },
                   text: 'Cadastrar',
                   options: FFButtonOptions(

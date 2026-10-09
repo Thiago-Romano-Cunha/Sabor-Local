@@ -1,7 +1,9 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'pag01_splash_art_model.dart';
 export 'pag01_splash_art_model.dart';
 
@@ -24,6 +26,17 @@ class _Pag01SplashArtWidgetState extends State<Pag01SplashArtWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => Pag01SplashArtModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(
+        Duration(
+          milliseconds: 7000,
+        ),
+      );
+
+      context.pushNamed(Pag02HomepageWidget.routeName);
+    });
   }
 
   @override
@@ -52,11 +65,11 @@ class _Pag01SplashArtWidgetState extends State<Pag01SplashArtWidget> {
                 color: FlutterFlowTheme.of(context).secondaryBackground,
               ),
               child: FlutterFlowVideoPlayer(
-                path: 'assets/videos/529-720.mp4',
+                path: 'assets/videos/gemini_generated_video_a3a58070.mp4',
                 videoType: VideoType.asset,
-                autoPlay: false,
-                looping: true,
-                showControls: true,
+                autoPlay: true,
+                looping: false,
+                showControls: false,
                 allowFullScreen: true,
                 allowPlaybackSpeedMenu: false,
               ),

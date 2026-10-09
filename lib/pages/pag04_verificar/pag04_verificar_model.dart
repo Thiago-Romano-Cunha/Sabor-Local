@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'pag04_verificar_widget.dart' show Pag04VerificarWidget;
@@ -10,6 +11,8 @@ class Pag04VerificarModel extends FlutterFlowModel<Pag04VerificarWidget> {
   TextEditingController? pinCodeController;
   FocusNode? pinCodeFocusNode;
   String? Function(BuildContext, String?)? pinCodeControllerValidator;
+  // Stores action output result for [Backend Call - API (Valida OTP)] action in Button widget.
+  ApiCallResponse? apiResultanf;
 
   @override
   void initState(BuildContext context) {

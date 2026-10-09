@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,7 +11,12 @@ import 'pag04_verificar_model.dart';
 export 'pag04_verificar_model.dart';
 
 class Pag04VerificarWidget extends StatefulWidget {
-  const Pag04VerificarWidget({super.key});
+  const Pag04VerificarWidget({
+    super.key,
+    required this.email,
+  });
+
+  final String? email;
 
   static String routeName = 'Pag04Verificar';
   static String routePath = '/pag04Verificar';
@@ -188,8 +194,53 @@ class _Pag04VerificarWidgetState extends State<Pag04VerificarWidget> {
                               100.0, 250.0, 100.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context
-                                  .pushNamed(Pag05CadastroCEPWidget.routeName);
+                              var _shouldSetState = false;
+                              _model.apiResultanf = await ValidaOTPCall.call(
+                                codigoOpt: _model.pinCodeController!.text,
+                                email: widget.email,
+                              );
+
+                              _shouldSetState = true;
+                              if ((_model.apiResultanf?.succeeded ?? true)) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Codigo Validado com sucesso',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                );
+
+                                context.pushNamed(
+                                    Pag05CadastroCEPWidget.routeName);
+
+                                if (_shouldSetState) safeSetState(() {});
+                                return;
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Codigo invalido',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor: Color(0xFFF00303),
+                                  ),
+                                );
+                                if (_shouldSetState) safeSetState(() {});
+                                return;
+                              }
+
+                              if (_shouldSetState) safeSetState(() {});
                             },
                             text: 'Verificar',
                             options: FFButtonOptions(

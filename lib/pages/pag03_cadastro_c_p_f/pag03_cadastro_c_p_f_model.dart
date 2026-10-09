@@ -35,10 +35,12 @@ class Pag03CadastroCPFModel extends FlutterFlowModel<Pag03CadastroCPFWidget> {
   late bool textFieldSenhaVisibility;
   String? Function(BuildContext, String?)?
       textFieldSenhaTextControllerValidator;
-  // Stores action output result for [Backend Call - API (Cadastro)] action in Verificacao widget.
-  ApiCallResponse? apiResultejq;
-  // Stores action output result for [Backend Call - API (ValidacaoEmail)] action in Verificacao widget.
-  ApiCallResponse? apiResultefa;
+  // Stores action output result for [Backend Call - API (cadastro)] action in Verificacao widget.
+  ApiCallResponse? apiResult60n;
+  // Stores action output result for [Backend Call - API (cliente)] action in Verificacao widget.
+  ApiCallResponse? apiResultkh6;
+  // Stores action output result for [Backend Call - API (Sendgrid)] action in Verificacao widget.
+  ApiCallResponse? apiResultmhe;
 
   @override
   void initState(BuildContext context) {

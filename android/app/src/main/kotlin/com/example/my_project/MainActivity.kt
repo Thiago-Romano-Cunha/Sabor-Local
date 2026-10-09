@@ -1,4 +1,4 @@
-package com.mycompany.saborlocal
+package com.mycompany.saborlocalprojeto
 
 import io.flutter.embedding.android.FlutterActivity
 
